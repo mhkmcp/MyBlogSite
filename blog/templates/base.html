@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+{% load static %}
+<!--%{ load static from staticfiles %}-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title%}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: row;
+        }
+        #content {
+            flex: 2;
+        }
+        #sidebar {
+            flex: 2;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <div id="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+        <div id="sidebar">
+            <h2>My Blog</h2>
+            <p>This is my blog</p>
+        </div>
+    </div>
+
+</body>
+</html>
