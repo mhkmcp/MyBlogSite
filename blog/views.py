@@ -1,7 +1,35 @@
+from django.core.mail import send_mail, BadHeaderError
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView
 from .models import Post
+from .forms import EmailPostForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+
+def post_share(request, post_id):
+    post = get_object_or_404(Post, id=post_id, status='published')
+    sent = False
+    if request.method == 'POST':
+        form = EmailPostForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            print(data)
+            # send email
+            post_url = request.build_absolute_uri(post.get_absolute_url())
+            subject = '{} ({}) recommends you reading "{}"'\
+                .format(data['name'], data['email'], post.title)
+            message = 'Read "{}" at {}\n\n{}\'s comments: {}'\
+                .format(post.title, post_url, data['name'], data['comments'])
+
+            try:
+                send_mail(subject, message, data['email'], [data['to']])
+                sent = True
+            except Exception as ex:
+                print(ex)
+
+    else:
+        form = EmailPostForm()
+    return render(request, 'blog/post_share.html', {'post': post, 'form': form, 'sent': sent})
 
 
 class PostList(ListView):
