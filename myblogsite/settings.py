@@ -1,6 +1,11 @@
 """
 admin
 admin@123
+
+postgres
+db: blog
+user: admin
+pass: 02@...@**
 """
 import os
 from pathlib import Path
@@ -20,7 +25,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+SITE_ID = 4
 # Application definition
 
 INSTALLED_APPS = [
@@ -29,6 +34,11 @@ INSTALLED_APPS = [
 
     # 3rd party
     'taggit',
+    'django.contrib.postgres',
+
+    # sitemap
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
 
     # built in apps
     'django.contrib.admin',
@@ -74,9 +84,15 @@ WSGI_APPLICATION = 'myblogsite.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'blog',
+        'USER': 'blog',
+        'PASSWORD': '02@...@**'
     }
 }
 

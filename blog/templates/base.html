@@ -53,6 +53,7 @@
         <div id="sidebar">
             <h2>My Blog</h2>
             <p>This is my blog. I have written {% total_posts %} </p>
+            <p><a href="{% url 'blog:post_feed' %}">Subscribe to my RSS feed</a></p>
 
             <h3>Latest Posts</h3>
             {% show_latest_posts 4 %}
@@ -65,6 +66,9 @@
                 </li>
                 {% endfor %}
             </ul>
+<!--            <h3></h3>-->
+            <h3><a href="{% url 'blog:post_search' %}">Search for posts</a></h3>
+<!--            <form action="{% url 'blog:post_search' %}" method="get">-->
         </div>
 
 
